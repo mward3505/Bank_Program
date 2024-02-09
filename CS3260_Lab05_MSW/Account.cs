@@ -54,6 +54,12 @@ namespace CS3260_Lab05_MSW
         }
 
         /// <summary>
+        /// Gets the account type
+        /// </summary>
+        /// <returns>String of the account type</returns>
+        public string GetType() { return _accountType; }
+
+        /// <summary>
         /// Purpose: Set the name for the account
         /// </summary>
         /// <param _name= inName>Sets the name for the class based ont he users input. Must be a valid or non-empty string</param>
@@ -118,7 +124,7 @@ namespace CS3260_Lab05_MSW
         /// <param _balance>users current balance in their account</param>
         /// <returns>Bool value to know if adding funds was a success</returns>
         /// -----------------------------------------------------------------
-        public bool PayInFunds(decimal amount)
+        public virtual bool PayInFunds(decimal amount)
         {
             if (amount < 0) //checks to make sure amount is not less than 0
             {
@@ -136,7 +142,7 @@ namespace CS3260_Lab05_MSW
         /// <param _balance>users current balance in their account</param>
         /// <returns>Bool value to know if adding funds was a success</returns>
         /// -----------------------------------------------------------------
-        public bool WithdrawFunds(decimal amount)
+        public virtual bool WithdrawFunds(decimal amount)
         {
             if (amount < 0 || amount > _balance) //checks to make sure amount is not less than 0 or greater than the balance
             {

@@ -16,7 +16,7 @@ namespace CS3260_Lab05_MSW
     /// </summary>
     internal class AccountBank : IEnumerable<Account>
     {
-        //Creates the array
+        //Creates the dictionary
         private Dictionary<string, Account> _accounts = new Dictionary<string, Account>();
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace CS3260_Lab05_MSW
         /// <returns>the account enumerator</returns>
         public IEnumerator<Account> GetEnumerator()
         {
-            return ((IEnumerable<Account>)_accounts).GetEnumerator();
+            return _accounts.Values.GetEnumerator();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace CS3260_Lab05_MSW
         /// <returns>the account enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _accounts.GetEnumerator();
+            return this.GetEnumerator();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace CS3260_Lab05_MSW
         /// </summary>
         /// <param name="account">The account object that you would like to store in the array</param>
         /// <returns>The success bool value to know if the information was properly stored</returns>
-        bool StoreAccount(Account account)
+        public bool StoreAccount(Account account)
         {
             if (account == null || _accounts.ContainsKey(account.AccountNumber))
             {
@@ -79,7 +79,7 @@ namespace CS3260_Lab05_MSW
         /// </summary>
         /// <param name="accountNumber">The desired account number that needs to be found</param>
         /// <returns>The Account object that was found in the array. If not found then it returns null</returns>
-        Account FindAccount(string accountNumber)
+        public Account FindAccount(string accountNumber)
         {
             _accounts.TryGetValue(accountNumber, out Account account);
             return account;

@@ -14,7 +14,7 @@ namespace CS3260_Lab05_MSW
     internal class SavingsAccount : Account
     {
         private const decimal _savingsMinBalance = 100;
-        private const decimal _serviceFee = 0;
+        private const decimal _serviceFee = 0.01m;
 
         /// <summary>
         /// Savings account contstructor to provide the correct default balance and account number associated
@@ -41,6 +41,30 @@ namespace CS3260_Lab05_MSW
             }
 
             _balance = inBalance;
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the service fee used for when a deposit is made
+        /// </summary>
+        /// <returns>decimal of the _serviceFee variable</returns>
+        public decimal GetFee() { return _serviceFee; }
+
+        /// <summary>
+        /// Overrides main deposit functionality to add intrest to all deposits made to savings
+        /// </summary>
+        /// <param name="amount">The amount the user want's to deposit</param>
+        /// <returns>The success of the deposit</returns>
+        public override bool PayInFunds(decimal amount)
+        {
+            if (amount < 0) //checks to make sure amount is not less than 0
+            {
+                return false;
+            }
+
+            _balance += amount;
+            amount = amount * _serviceFee;
+            _balance += amount;
             return true;
         }
     }

@@ -13,7 +13,7 @@ namespace CS3260_Lab05_MSW
     /// has specific information about the checking account like the balance and service fees./// </summary>
     internal class CheckingAccount : Account
     {
-        private const decimal _checkingMinBalance = 10;
+        private const decimal _checkingMinBalance = 100;
         private const decimal _serviceFee = 5;
 
         /// <summary>
@@ -41,6 +41,47 @@ namespace CS3260_Lab05_MSW
             }
 
             _balance = inBalance;
+            return true;
+        }
+
+        /// <summary>
+        /// Get the service fee for withdrawls
+        /// </summary>
+        /// <returns>Decimal of the _serviceFee</returns>
+        public decimal GetFee() { return _serviceFee; }
+
+        /// <summary>
+        /// Overrides the main withdraw function from account to implement behavior for when the user wants to withdraw an amount that will
+        /// bring their account under the minimum and apply the fee
+        /// </summary>
+        /// <param name="amount">The amount the user wants to withdraw</param>
+        /// <returns>Boolean of the success of the withdraw</returns>
+        public override bool WithdrawFunds(decimal amount)
+        {
+            if (_balance - amount < _checkingMinBalance)
+            {
+                
+                if (amount < 0 || amount + _serviceFee > _balance && amount != 0) //checks to make sure amount is not less than 0 or greater than the balance with service fee
+                {
+                    return false;
+                }
+                else
+                {
+                    if (amount == 0)
+                    {
+                        return true;
+                    }
+                    _balance -= amount + _serviceFee;
+                    return true;
+                }
+            }
+            if (amount < 0 || amount > _balance && amount != 0) //checks to make sure amount is not less than 0 or greater than the balance
+            {
+                return false;
+            }
+
+            _balance -= amount;
+        
             return true;
         }
     }
