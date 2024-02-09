@@ -1,7 +1,7 @@
 ﻿// Project Prolog
 // Name: Matt Ward
 // CS3260 Section 001
-// Project: Lab_04
+// Project: Lab_05
 // Date: 2/2/2024
 // Purpose: Provide the main program for the UVU bank. The user will be able to create multiple types of accounts
 // and provide the necessary details for each. They will be displayed at the end of the program.

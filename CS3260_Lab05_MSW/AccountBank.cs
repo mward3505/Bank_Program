@@ -11,42 +11,22 @@ namespace CS3260_Lab05_MSW
 {
     /// <summary>
     /// This class creates and holds a Account bank array to store multiple accounts information and provides
-    /// access to the array's information. Inherits from the
+    /// access to the dictionary information. Inherits from the
     /// Enumerable interface to provide bracket functionality.
     /// </summary>
     internal class AccountBank : IEnumerable<Account>
     {
         //Creates the array
-        private Account[] _accounts;
-
-        /// <summary>
-        /// Account banks constructor to create the array with the appropriate size to input the accounts
-        /// </summary>
-        /// <param name="size">The size of the array that will be created</param>
-        public AccountBank(int size)
-        {
-            _accounts = new Account[size];
-        }
+        private Dictionary<string, Account> _accounts = new Dictionary<string, Account>();
 
         /// <summary>
         /// Provide a length operator for the array to use to provide how big it is
         /// </summary>
         public int Length
         {
-            get { return _accounts.Length; }
+            get { return _accounts.Count(); }
         }
-
-        /// <summary>
-        /// provides the ability to use [] notation when accessing the array to be able to get and set information
-        /// in the specific location
-        /// </summary>
-        /// <param name="i">Provides a way for the index to work with the array</param>
-        /// <returns></returns>
-        public Account this[int i]
-        {
-            get { return _accounts[i]; }
-            set { _accounts[i] = value; }
-        }
+        
 
         /// <summary>
         /// Provides a way to use the array in a foreach loop
@@ -73,26 +53,23 @@ namespace CS3260_Lab05_MSW
         /// <returns>The success bool value to know if the information was properly stored</returns>
         bool StoreAccount(Account account)
         {
-            if (account == null)
+            if (account == null || _accounts.ContainsKey(account.AccountNumber))
             {
                 return false;
             }
 
-            bool foundEmptySpot = false;
-            for (int i = 0; i < _accounts.Length; i++)
-            {
-                if (_accounts[i] == null)
-                {
-                    _accounts[i] = account;
-                    foundEmptySpot = true;
-                    break;
-                }
-            }
+            //bool foundEmptySpot = false;
+            //for (int i = 0; i < _accounts.Length; i++)
+            //{
+            //    if (_accounts[i] == null)
+            //    {
+            //        _accounts[i] = account;
+            //        foundEmptySpot = true;
+            //        break;
+            //    }
+            //}
 
-            if (!foundEmptySpot)
-            {
-                return false;
-            }
+            _accounts.Add(account.AccountNumber, account);
 
             return true;
         }
@@ -104,15 +81,8 @@ namespace CS3260_Lab05_MSW
         /// <returns>The Account object that was found in the array. If not found then it returns null</returns>
         Account FindAccount(string accountNumber)
         {
-            foreach (var account in _accounts)
-            {
-                if (account != null && account.AccountNumber == accountNumber)
-                {
-                    return account;
-                }
-            }
-
-            return null;
+            _accounts.TryGetValue(accountNumber, out Account account);
+            return account;
         }
     }
 }
